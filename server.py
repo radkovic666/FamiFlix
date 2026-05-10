@@ -26,7 +26,7 @@ OMDB_API_KEY = os.getenv("OMDB_API_KEY", "80b0d7b7")
 
 PAGE_RESULT_CACHE_LIMIT = 160
 TOP_RATING_MIN_VOTES = 10000
-POPULAR_MIN_VOTES = 0
+POPULAR_MIN_VOTES = 1000
 
 app = FastAPI(title="FamiFlix")
 app.mount("/posters", StaticFiles(directory=str(POSTER_DIR)), name="posters")
@@ -185,6 +185,10 @@ def load_catalog_once(section: str):
             # current_year() is fixed to 2026 in this setup, so 2027+ titles
             # are excluded from movies and series results.
             if item.get("_year") and item["_year"] > current_year():
+                continue
+
+            # Hide low-signal titles globally to keep catalog quality high.
+            if item.get("_votes", 0) < POPULAR_MIN_VOTES:
                 continue
 
             real_idx = len(cleaned)
