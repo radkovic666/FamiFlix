@@ -40,6 +40,10 @@
     .chip{display:inline-flex;gap:6px;align-items:center;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line);font-size:13px;cursor:pointer}.chip input{width:auto}
     .switches{display:flex;gap:8px;flex-wrap:wrap}.switchBtn{background:var(--card2);color:#fff;border:1px solid var(--line)}.switchBtn.active{background:var(--yellow);color:#000}
     .smallNote{font-size:12px;color:var(--muted);line-height:1.35;margin-top:8px}
+    #searchBtn.filtersPending{background:linear-gradient(135deg,var(--yellow),var(--yellow2));box-shadow:0 0 0 2px rgba(245,197,24,.25)}
+    #searchBtn.filtersPending::after{content:" • Обнови";font-size:12px;margin-left:4px}
+    .chip:has(input:checked){border-color:rgba(245,197,24,.55);background:rgba(245,197,24,.12)}
+
     .statusRow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:12px 2px 18px;color:var(--muted);font-size:14px;flex-wrap:wrap}.statusStrong{color:#fff;font-weight:bold}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:22px;min-height:380px}
     .card{background:linear-gradient(180deg,var(--card),#15151b);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.4);position:relative;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
