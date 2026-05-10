@@ -119,6 +119,8 @@ def main():
     print("Sorted by most reviews/votes first")
     print(f"Using posters directory: {POSTER_DIR}")
 
+    index = start_index
+
     try:
         for index in range(start_index, end_index):
             item = series[index]

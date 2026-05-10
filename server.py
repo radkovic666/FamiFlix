@@ -30,6 +30,7 @@ app = FastAPI(title="FamiFlix")
 app.mount("/posters", StaticFiles(directory=str(POSTER_DIR)), name="posters")
 
 _cache_lock = threading.Lock()
+_result_cache_lock = threading.Lock()
 _catalog_cache: Dict[str, List[dict]] = {}
 _genres_cache: Dict[str, List[str]] = {}
 _search_index: Dict[str, Dict[str, set]] = {}
@@ -38,7 +39,7 @@ _result_cache: "OrderedDict[str, dict]" = OrderedDict()
 
 
 def current_year() -> int:
-    return 2026
+    return datetime.utcnow().year
 
 
 def valid_tconst(tconst: str) -> bool:
@@ -352,17 +353,19 @@ def parse_genres(genres: str):
 
 
 def result_cache_get(key: str):
-    data = _result_cache.get(key)
-    if data is not None:
-        _result_cache.move_to_end(key)
-    return data
+    with _result_cache_lock:
+        data = _result_cache.get(key)
+        if data is not None:
+            _result_cache.move_to_end(key)
+        return data
 
 
 def result_cache_set(key: str, data: dict):
-    _result_cache[key] = data
-    _result_cache.move_to_end(key)
-    while len(_result_cache) > PAGE_RESULT_CACHE_LIMIT:
-        _result_cache.popitem(last=False)
+    with _result_cache_lock:
+        _result_cache[key] = data
+        _result_cache.move_to_end(key)
+        while len(_result_cache) > PAGE_RESULT_CACHE_LIMIT:
+            _result_cache.popitem(last=False)
 
 
 def paginated_catalog_response(
