@@ -103,6 +103,8 @@ def main():
     print(f"Stopping at index: {end_index}")
     print("Sorted by most reviews/votes first")
 
+    index = start_index
+
     try:
         for index in range(start_index, end_index):
             movie = movies[index]
