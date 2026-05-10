@@ -12,6 +12,10 @@ FamiFlix is a lightweight FastAPI service and static site generator for browsing
 ## Project Files
 
 - `server.py` — main API server.
+- `assets/styles.css` — frontend styles.
+- `assets/app.js` — frontend behavior.
+- `run_famiflix.sh` — one-command start script (plug-and-play).
+- `famiflix.service` — Linux systemd service template.
 - `build_imdb_movies_site.py` / `build_imdb_series_site.py` — build catalog data.
 - `cacheposters.py` / `cacheseries.py` — cache poster assets.
 - `index.html` — frontend entry page.
@@ -24,16 +28,39 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-## Run the API
+## Run the project (plug-and-play)
 
 ```bash
-uvicorn server:app --host 0.0.0.0 --port 8000 --reload
+./run_famiflix.sh
 ```
 
 Then open:
 
-- API docs: `http://localhost:8000/docs`
-- Frontend: `http://localhost:8000/`
+- API docs: `http://localhost:5050/docs`
+- Frontend: `http://localhost:5050/`
+
+## Linux service (systemd)
+
+1. Copy project to `/var/www/FamiFlix`.
+2. Copy the service file:
+
+```bash
+sudo cp famiflix.service /etc/systemd/system/famiflix.service
+```
+
+3. Enable and start:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now famiflix.service
+```
+
+4. Check status/logs:
+
+```bash
+sudo systemctl status famiflix.service
+sudo journalctl -u famiflix.service -f
+```
 
 ## Environment Variables
 

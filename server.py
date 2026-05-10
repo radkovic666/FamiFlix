@@ -16,9 +16,11 @@ from fastapi.staticfiles import StaticFiles
 BASE_DIR = Path(__file__).resolve().parent
 POSTER_DIR = BASE_DIR / "posters"
 INFO_DIR = BASE_DIR / "movie_info"
+ASSETS_DIR = BASE_DIR / "assets"
 
 POSTER_DIR.mkdir(exist_ok=True)
 INFO_DIR.mkdir(exist_ok=True)
+ASSETS_DIR.mkdir(exist_ok=True)
 
 OMDB_API_KEY = os.getenv("OMDB_API_KEY", "80b0d7b7")
 
@@ -28,6 +30,7 @@ POPULAR_MIN_VOTES = 0
 
 app = FastAPI(title="FamiFlix")
 app.mount("/posters", StaticFiles(directory=str(POSTER_DIR)), name="posters")
+app.mount("/assets", StaticFiles(directory=str(ASSETS_DIR)), name="assets")
 
 _cache_lock = threading.Lock()
 _result_cache_lock = threading.Lock()
