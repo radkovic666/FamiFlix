@@ -39,10 +39,34 @@ _genres_cache: Dict[str, List[str]] = {}
 _search_index: Dict[str, Dict[str, set]] = {}
 _sorted_cache: Dict[Tuple[str, str], List[dict]] = {}
 _result_cache: "OrderedDict[str, dict]" = OrderedDict()
+_favorites_lock = threading.Lock()
+FAVORITES_STORE_FILE = BASE_DIR / "favorites_store.json"
+_anon_favorites: Dict[str, List[str]] = {}
 
 
 def current_year() -> int:
     return datetime.utcnow().year
+
+
+def load_favorites_store():
+    if not FAVORITES_STORE_FILE.exists():
+        return
+    try:
+        with open(FAVORITES_STORE_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, dict):
+            for key, values in data.items():
+                if re.fullmatch(r"[a-f0-9]{64}", key or "") and isinstance(values, list):
+                    valid_ids = [v for v in values if valid_tconst(v)]
+                    if valid_ids:
+                        _anon_favorites[key] = sorted(set(valid_ids))
+    except Exception as e:
+        print("favorites store load failed:", e)
+
+
+def persist_favorites_store():
+    with open(FAVORITES_STORE_FILE, "w", encoding="utf-8") as f:
+        json.dump(_anon_favorites, f, ensure_ascii=False)
 
 
 def valid_tconst(tconst: str) -> bool:
@@ -471,6 +495,7 @@ def paginated_catalog_response(
 
 @app.on_event("startup")
 def warm_cache():
+    load_favorites_store()
     for section in ("movies", "series"):
         try:
             load_catalog_once(section)
@@ -557,6 +582,34 @@ def title_info(tconst: str):
 @app.get("/movie-info/{tconst}")
 def movie_info(tconst: str):
     return info_response(tconst)
+
+
+@app.get("/api/favorites/{fingerprint}")
+def get_anonymous_favorites(fingerprint: str):
+    if not re.fullmatch(r"[a-f0-9]{64}", fingerprint or ""):
+        raise HTTPException(status_code=400, detail="Invalid fingerprint")
+    with _favorites_lock:
+        ids = _anon_favorites.get(fingerprint, [])
+    return JSONResponse({"favorites": ids}, headers={"Cache-Control": "no-store"})
+
+
+@app.put("/api/favorites/{fingerprint}")
+def put_anonymous_favorites(fingerprint: str, payload: dict):
+    if not re.fullmatch(r"[a-f0-9]{64}", fingerprint or ""):
+        raise HTTPException(status_code=400, detail="Invalid fingerprint")
+    ids = payload.get("favorites", [])
+    if not isinstance(ids, list):
+        raise HTTPException(status_code=400, detail="favorites must be a list")
+    valid_ids = sorted({x for x in ids if valid_tconst(x)})
+    if len(valid_ids) > 2000:
+        raise HTTPException(status_code=400, detail="Too many favorites")
+    with _favorites_lock:
+        if valid_ids:
+            _anon_favorites[fingerprint] = valid_ids
+        elif fingerprint in _anon_favorites:
+            del _anon_favorites[fingerprint]
+        persist_favorites_store()
+    return JSONResponse({"ok": True, "favorites": valid_ids}, headers={"Cache-Control": "no-store"})
 
 
 def info_response(tconst: str):
