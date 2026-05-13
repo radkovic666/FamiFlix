@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<header><div class="hero"><a class="brand" id="homeLink" href="/?section=movies&page=1&sort=reviews&view=all"><img src="/logo.png" alt="Pukanki.Fun logo" class="brandLogo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"><span class="brandBadge" style="display:none">P</span><span>Pukanki.Fun</span></a><div class="tagline">Наслади на любимите ти филми и сериали!</div><div class="tabs"><a class="tabBtn active" id="moviesTab" href="/?section=movies&page=1&sort=reviews&view=all">Филми</a><a class="tabBtn" id="seriesTab" href="/?section=series&page=1&sort=reviews&view=all">Сериали</a></div></div></header>
+<header><div class="hero"><a class="brand" id="homeLink" href="/?section=movies&page=1&sort=reviews&view=all"><span class="brandBadge">P</span><span>Pukanki.Fun</span></a><div class="tagline">Наслади на любимите ти филми и сериали!</div><div class="tabs"><a class="tabBtn active" id="moviesTab" href="/?section=movies&page=1&sort=reviews&view=all">Филми</a><a class="tabBtn" id="seriesTab" href="/?section=series&page=1&sort=reviews&view=all">Сериали</a></div></div></header>
 <main>
   <div class="searchShell"><input id="search" placeholder="Търси напр. Fast and Furious, Avatar, Breaking Bad"><button id="searchBtn">Търси</button><button id="filterToggle" class="filterToggle">Филтри</button></div>
   <div class="filters" id="advancedPanel"><div class="filterGrid">
@@ -19,9 +19,9 @@
     <div class="filterBox"><div class="filterTitle">Жанрове</div><div class="chips" id="genreList"></div><div class="smallNote">При избрани няколко жанра се показват само заглавия, които съдържат всички избрани жанрове.</div></div>
   </div></div>
   <div class="statusRow"><div id="count">Зареждам...</div><div id="currentState"></div></div>
-  <div class="pagination" id="paginationTop"></div><div class="grid" id="items"></div><div class="pagination" id="pagination"></div>
+  <div class="grid" id="items"></div><div class="pagination" id="pagination"></div>
 </main>
-<div class="modal" id="playerModal"><div class="modalContent"><div class="modalHeader"><strong id="playerTitle">Pukanki.Fun</strong><div class="playerSwitch"><button class="playerBtn active" id="player1Btn">Player 1</button><button class="playerBtn" id="player2Btn">Player 2</button><button class="closeBtn" id="closePlayer">Затвори</button></div></div><iframe id="playerFrame" allowfullscreen ></iframe></div></div>
+<div class="modal" id="playerModal"><div class="modalContent"><div class="modalHeader"><strong id="playerTitle">Pukanki.Fun</strong><div class="playerSwitch"><button class="playerBtn active" id="player1Btn">Player 1</button><button class="playerBtn" id="player2Btn">Player 2</button><button class="closeBtn" id="closePlayer">Затвори</button></div></div><iframe id="playerFrame" allowfullscreen referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe></div></div>
 <div class="modal" id="infoModal"><div class="modalContent"><div class="modalHeader"><strong id="infoTitle">Информация</strong><button class="closeBtn" id="closeInfo">Затвори</button></div><div class="infoBody"><img id="infoPoster" class="infoPoster" alt="poster"><div class="infoText" id="infoText">Зареждам...</div></div></div></div>
 <footer><div class="footerBrand"><img src="/logo.png" alt="Pukanki.Fun logo" class="footerLogo"><span>Pukanki.Fun Наслади на любимите ти филми и сериали!</span></div><strong>Важно:</strong> Pukanki.Fun не съхранява филми, сериали, аудио или видео файлове на своите сървъри. Всички онлайн заглавия са вградени от външни уебсайтове. Ако сте носител на права и имате въпрос относно съдържание, моля свържете се с източника, който хоства съответния файл.</footer>
 <script src="/assets/app.js"></script></body></html>
