@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FamiFlix</title>
+  <title>Pukanki.Fun</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="stylesheet" href="/assets/styles.css">
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default%2Cfetch%2CPromise%2CURLSearchParams%2CAbortController%2CArray.from%2CObject.assign%2CString.prototype.startsWith%2CString.prototype.endsWith%2CElement.prototype.closest%2CElement.prototype.matches%2CIntl.NumberFormat"></script>
@@ -19,9 +19,9 @@
     <div class="filterBox"><div class="filterTitle">Жанрове</div><div class="chips" id="genreList"></div><div class="smallNote">При избрани няколко жанра се показват само заглавия, които съдържат всички избрани жанрове.</div></div>
   </div></div>
   <div class="statusRow"><div id="count">Зареждам...</div><div id="currentState"></div></div>
-  <div class="grid" id="items"></div><div class="pagination" id="pagination"></div>
+  <div class="pagination" id="paginationTop"></div><div class="grid" id="items"></div><div class="pagination" id="pagination"></div>
 </main>
-<div class="modal" id="playerModal"><div class="modalContent"><div class="modalHeader"><strong id="playerTitle">FamiFlix</strong><button class="closeBtn" id="closePlayer">Затвори</button></div><iframe id="playerFrame" allowfullscreen ></iframe></div></div>
+<div class="modal" id="playerModal"><div class="modalContent"><div class="modalHeader"><strong id="playerTitle">Pukanki.Fun</strong><div class="playerSwitch"><button class="playerBtn active" id="player1Btn">Player 1</button><button class="playerBtn" id="player2Btn">Player 2</button><button class="closeBtn" id="closePlayer">Затвори</button></div></div><iframe id="playerFrame" allowfullscreen ></iframe></div></div>
 <div class="modal" id="infoModal"><div class="modalContent"><div class="modalHeader"><strong id="infoTitle">Информация</strong><button class="closeBtn" id="closeInfo">Затвори</button></div><div class="infoBody"><img id="infoPoster" class="infoPoster" alt="poster"><div class="infoText" id="infoText">Зареждам...</div></div></div></div>
-<footer><strong>Важно:</strong> Pukanki.Fun не съхранява филми, сериали, аудио или видео файлове на своите сървъри. Всички онлайн заглавия са вградени от външни уебсайтове. Ако сте носител на права и имате въпрос относно съдържание, моля свържете се с източника, който хоства съответния файл.</footer>
+<footer><div class="footerBrand"><img src="/logo.png" alt="Pukanki.Fun logo" class="footerLogo"><span>Pukanki.Fun Наслади на любимите ти филми и сериали!</span></div><strong>Важно:</strong> Pukanki.Fun не съхранява филми, сериали, аудио или видео файлове на своите сървъри. Всички онлайн заглавия са вградени от външни уебсайтове. Ако сте носител на права и имате въпрос относно съдържание, моля свържете се с източника, който хоства съответния файл.</footer>
 <script src="/assets/app.js"></script></body></html>
