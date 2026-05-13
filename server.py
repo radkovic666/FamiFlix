@@ -17,6 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent
 POSTER_DIR = BASE_DIR / "posters"
 INFO_DIR = BASE_DIR / "movie_info"
 ASSETS_DIR = BASE_DIR / "assets"
+FAVICON_PATH = BASE_DIR / "favicon.ico"
 
 POSTER_DIR.mkdir(exist_ok=True)
 INFO_DIR.mkdir(exist_ok=True)
@@ -511,6 +512,12 @@ def home():
 @app.get("/index.html")
 def index():
     return FileResponse(BASE_DIR / "index.html")
+
+@app.get("/favicon.ico")
+def favicon():
+    if FAVICON_PATH.exists():
+        return FileResponse(FAVICON_PATH, media_type="image/x-icon", headers={"Cache-Control": "public, max-age=86400"})
+    raise HTTPException(status_code=404, detail="favicon.ico not found")
 
 
 def legacy_json(stem: str):
